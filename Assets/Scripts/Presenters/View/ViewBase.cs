@@ -20,11 +20,6 @@ namespace Presenter.View
         {
             return "BaseView";
         }
-
-        public virtual void SetUp<T>(T initialData)
-        {
-            Debug.Log(initialData);
-        }
     }
 }
 

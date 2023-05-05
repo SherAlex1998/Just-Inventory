@@ -12,29 +12,55 @@ namespace Presenter.View
 {
     public class SpacesView : ViewBase
     {
-        private InventoryInteractor inventoryInteractor;
-
-        [SerializeField] Button addNewViewButton;
+        [SerializeField] Button addNewSpaceButton;
         [SerializeField] Transform content;
         [SerializeField] SpaceItemPrefab spaceItemPrefab;
 
+        private InventoryInteractor inventoryInteractor;
+        private TopBarInteractor topBarInteractor;
+
+        private List<SpaceEntity> allSpaces;
+
         private void Start()
         {
-            addNewViewButton.onClick.AddListener(
+            allSpaces = new List<SpaceEntity>();
+            inventoryInteractor.LoadSpaces((spaces) =>
+            {
+                allSpaces = spaces;
+                UpdateSpaces(spaces);
+            });
+            addNewSpaceButton.onClick.AddListener(
                 () => changeViewInteractor.ChangeView(ChangeViewInteractor.ViewNames.SPACE_ADDER_VIEW));
             inventoryInteractor.onSpaceCreated += UpdateSpaces;
+            topBarInteractor.SetTopBarTitle("Ваши пространства");
+        }
+
+        private void OnEnable()
+        {
+            topBarInteractor.SetTopBarTitle("Ваши пространства");
         }
 
         [Inject]
-        private void Constructor(InventoryInteractor inventoryInteractor)
+        private void Constructor(InventoryInteractor inventoryInteractor, TopBarInteractor topBarInteractor)
         {
             this.inventoryInteractor = inventoryInteractor;
+            this.topBarInteractor = topBarInteractor;
         }
 
         public void UpdateSpaces(SpaceEntity spaceEntity)
         {
             SpaceItemPrefab newSpaceItem = Instantiate(spaceItemPrefab, content);
+            allSpaces.Add(spaceEntity);
             newSpaceItem.SetUp(spaceEntity);
+        }
+
+        public void UpdateSpaces(List<SpaceEntity> spaceEntitys)
+        {
+            foreach (SpaceEntity spaceEntity in spaceEntitys)
+            {
+                SpaceItemPrefab newSpaceItem = Instantiate(spaceItemPrefab, content);
+                newSpaceItem.SetUp(spaceEntity);
+            }
         }
 
         public override string GetViewName()

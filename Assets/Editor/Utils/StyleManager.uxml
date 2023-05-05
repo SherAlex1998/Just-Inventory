@@ -1,0 +1,4 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <uie:ColorField label="Text UI color" value="RGBA(0.000, 1.000, 1.000, 1.000)" name="textColorSelector" />
+    <ui:Button text="Set style" display-tooltip-when-elided="true" name="setStyleButton" />
+</ui:UXML>

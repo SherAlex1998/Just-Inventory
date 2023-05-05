@@ -11,12 +11,13 @@ namespace Presenter.View
 {
     public class SpaceAdderView : ViewBase
     {
-        private InventoryInteractor inventoryInteractor;
-
         [SerializeField]
         private TMP_InputField titleInputField;
         [SerializeField]
         private Button addSpaceButton;
+
+        private InventoryInteractor inventoryInteractor;
+        private TopBarInteractor topBarInteractor;
 
 
         public override string GetViewName()
@@ -25,8 +26,9 @@ namespace Presenter.View
         }
 
         [Inject]
-        private void Constructor(InventoryInteractor inventoryInteractor)
+        private void Constructor(InventoryInteractor inventoryInteractor, TopBarInteractor topBarInteractor)
         {
+            this.topBarInteractor = topBarInteractor;
             this.inventoryInteractor = inventoryInteractor;
         }
 
@@ -34,16 +36,11 @@ namespace Presenter.View
         {   
             addSpaceButton.onClick.AddListener(AddNewSpace);
         }
-        /*
-        private override void SetUp()
-        {
-            titleInputField.text = string.Empty;
-        }
-        */
 
         private void OnEnable()
         {
             titleInputField.text = string.Empty;
+            topBarInteractor.SetTopBarTitle("Новое пространство");
         }
 
         public void AddNewSpace()

@@ -26,14 +26,22 @@ namespace Manager
         {
             foreach (ViewBase view in ViewList)
             {
-                if (view.GetViewName() == newViewname)
-                {
-                    view.gameObject.SetActive(true);
-                    view.SetUp<string>("temp");
-                }
-                    
                 if (view.GetViewName() == previosViewName)
                     view.gameObject.SetActive(false);
+
+                if (view.GetViewName() == newViewname)
+                    view.gameObject.SetActive(true);
+            }
+        }
+
+        private void Awake()
+        {
+            foreach (ViewBase view in ViewList)
+            {
+                if (view.GetViewName() == ChangeViewInteractor.ViewNames.SPACES_VIEW)
+                {
+                    view.gameObject.SetActive(true);
+                }
             }
         }
     }
